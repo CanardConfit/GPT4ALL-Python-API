@@ -17,13 +17,13 @@ if os.name != 'nt':
 else:
     model_path = "{0}/AppData/Local/nomic.ai/GPT4All".format(home_directory)
 print("Model path: ", model_path)
-default_model = os.getenv("DEFAULT_MODEL", "nous-hermes-13b.ggmlv3.q4_0")
+default_model = os.getenv("DEFAULT_MODEL", "Meta-Llama-3-8B-Instruct.Q4_0.gguf")
 model_instance = GPT4All(default_model, model_path=model_path)
 
 
 def prompt_test(prompt, prompt_template):
     instruct_prompt = "\n" + simple_format(prompt_template, prompt)
-    print(model_instance.generate(instruct_prompt, streaming=False, tokens_size=400, temp=0.39))
+    print(model_instance.generate(instruct_prompt, streaming=False, max_tokens=400, temp=0.39))
 
 
 def extract_arguments_from_json(json_string):
@@ -134,7 +134,7 @@ def generate_text_by_payload(payload):
 
     instruct_prompt = "\n" + simple_format(prompt_template, prompt)
 
-    output = model_instance.generate(instruct_prompt, tokens_size=max_tokens, temp=temperature, top_p=top_p,
+    output = model_instance.generate(instruct_prompt, max_tokens=max_tokens, temp=temperature, top_p=top_p,
                                      top_k=top_k,
                                      n_batch=prompt_batch_size, repeat_penalty=repeat_penality,
                                      repeat_last_n=repeat_last_n,
